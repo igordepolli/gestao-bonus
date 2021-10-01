@@ -1,0 +1,178 @@
+package br.ufes.presenter;
+
+import br.ufes.model.Employee;
+import br.ufes.model.EmployeeCollection;
+import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
+import br.ufes.presenter.state.KeepEmployeePresenterViewState;
+import br.ufes.view.SearchEmployeeView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+
+public class SearchEmployeePresenter {
+
+    private static SearchEmployeePresenter instance = null;
+    private final SearchEmployeeView view;
+    private final EmployeeCollection employeeCollection;
+    private DefaultTableModel tableEmployees;
+
+    private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
+        this.employeeCollection = employeeCollection;
+
+        view = new SearchEmployeeView();
+        view.setLocation(20, 350);
+
+        constructTableModel();
+        loadEmployees();
+        initListeners();
+    }
+
+    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+        if (instance == null) {
+            instance = new SearchEmployeePresenter(employeeCollection);
+        }
+
+        return instance;
+    }
+
+    private void initListeners() {
+        view.getBtnClose().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                view.dispose();
+            }
+        });
+
+        view.getBtnSearch().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    defineTableBehavior(view.getTfdName().getText());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        view.getBtnViewEmployee().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    Employee emp = getEmployeeSelected();
+                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    keepEmployeePresenter.setEmployee(emp);
+                    keepEmployeePresenter.setState(new KeepEmployeePresenterViewState(keepEmployeePresenter, employeeCollection));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        view.getBtnNewEmployee().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        view.getTblEmployees().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (view.getTblEmployees().getSelectedRow() > -1) {
+                    changeView();
+                }
+            }
+        });
+    }
+
+    private void constructTableModel() {
+        tableEmployees = new DefaultTableModel(
+                new Object[][][][]{},
+                new String[]{"ID", "Nome", "Idade", "Função", "Salário base (R$)"}
+        );
+
+        view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableEmployees.setNumRows(0);
+        view.getTblEmployees().setModel(tableEmployees);
+    }
+
+    private void clearTable() {
+        if (tableEmployees.getRowCount() > 0) {
+            for (int i = tableEmployees.getRowCount() - 1; i > -1; i--) {
+                tableEmployees.removeRow(i);
+            }
+        }
+    }
+
+    private Employee getEmployeeSelected() throws Exception {
+        Employee employee = employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
+
+        return employee;
+    }
+
+    private String getIdOfEmployeeSelected() {
+        int rowIndex = view.getTblEmployees().getSelectedRow();
+
+        return (String) view.getTblEmployees().getValueAt(rowIndex, 0);
+    }
+
+    private boolean checkIfElementWasSelected() {
+        return view.getTblEmployees().getSelectedRow() >= 0;
+    }
+
+    private void changeView() {
+        if (checkIfElementWasSelected()) {
+            view.getBtnViewEmployee().setEnabled(true);
+        } else {
+            view.getBtnViewEmployee().setEnabled(false);
+        }
+    }
+
+    private void defineTableBehavior(String textInNameTextField) throws Exception {
+        if (textInNameTextField.equals("")) {
+            loadEmployees();
+        } else {
+            searchEmployee(textInNameTextField);
+        }
+    }
+
+    private void searchEmployee(String name) throws Exception {
+        Employee emp = employeeCollection.searchEmployeeByName(name);
+
+        clearTable();
+        tableEmployees.addRow(new Object[]{
+            emp.getId(),
+            emp.getName(),
+            emp.getDistance(),
+            emp.getOccupation(),
+            emp.getBaseSalary()
+        });
+
+    }
+
+    private void loadEmployees() {
+        clearTable();
+
+        for (Employee employee : employeeCollection.getEmployees()) {
+            tableEmployees.addRow(new Object[]{
+                employee.getId(),
+                employee.getName(),
+                employee.getDistance(),
+                employee.getOccupation(),
+                employee.getBaseSalary()
+            });
+        }
+    }
+
+    public SearchEmployeeView getView() {
+        return view;
+    }
+}

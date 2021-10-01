@@ -1,7 +1,7 @@
 package br.ufes.projetos01;
 
-import br.ufes.calculodebonus.ProcessadoraBonus;
-import br.ufes.model.Funcionario;
+import br.ufes.calculodebonus.ProcessBonus;
+import br.ufes.model.Employee;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
@@ -19,9 +19,9 @@ import org.junit.jupiter.params.provider.ValueSource;
  *
  * @author clayton
  */
-public class FuncionarioBonusTest {
+public class EmployeeBonusTest {
 
-  public FuncionarioBonusTest() {
+  public EmployeeBonusTest() {
   }
 
   @BeforeAll
@@ -44,36 +44,36 @@ public class FuncionarioBonusTest {
   @Test
   public void CT001() throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", 2500.00, "Gerente");
-    double salarioEsperado = 2500.00;
+    Employee employee = new Employee("Fulano", 2500.00, "Gerente");
+    double expectSalary = 2500.00;
 
     // Assert
-    assertEquals(salarioEsperado, funcionario.getSalarioBase(), 0.001);
+    assertEquals(expectSalary, employee.getBaseSalary(), 0.001);
   }
 
   @ParameterizedTest
   @ValueSource(doubles = { 998.0, 998.01 })
   public void CT002(double salario) throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", salario, "Gerente");
+    Employee employee = new Employee("Fulano", salario, "Gerente");
 
     // Assert
-    assertEquals(salario, funcionario.getSalario(), 0.001);
+    assertEquals(salario, employee.getSalary(), 0.001);
   }
 
   @ParameterizedTest
   @MethodSource
-  public void CT003(int faltas, double salarioEsperado) throws Exception {
+  public void CT003(int faltas, double expectSalary) throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", 2500.00, "Zelador");
-    funcionario.setFaltas(faltas);
-    ProcessadoraBonus pb = new ProcessadoraBonus();
+    Employee employee = new Employee("Fulano", 2500.00, "Zelador");
+    employee.setAttendances(faltas);
+    ProcessBonus pb = new ProcessBonus();
 
     // Act
-    pb.processar(funcionario);
+    pb.process(employee);
 
     // Assert
-    assertEquals(salarioEsperado, funcionario.getSalario(), 0.001);
+    assertEquals(expectSalary, employee.getSalary(), 0.001);
   }
 
   private static Stream<Arguments> CT003() {
@@ -83,18 +83,18 @@ public class FuncionarioBonusTest {
 
   @ParameterizedTest
   @MethodSource
-  public void CT004(int distancia, double salarioEsperado) throws Exception {
+  public void CT004(int distancia, double expectSalary) throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", 2500.00, "Zelador");
-    funcionario.setFaltas(10);
-    funcionario.setDistanciaMoradia(distancia);
-    ProcessadoraBonus pb = new ProcessadoraBonus();
+    Employee employee = new Employee("Fulano", 2500.00, "Zelador");
+    employee.setAttendances(10);
+    employee.setDistance(distancia);
+    ProcessBonus pb = new ProcessBonus();
 
     // Act
-    pb.processar(funcionario);
+    pb.process(employee);
 
     // Assert
-    assertEquals(salarioEsperado, funcionario.getSalario(), 0.001);
+    assertEquals(expectSalary, employee.getSalary(), 0.001);
   }
 
   private static Stream<Arguments> CT004() {
@@ -105,17 +105,17 @@ public class FuncionarioBonusTest {
 
   @ParameterizedTest
   @MethodSource
-  public void CT005(String cargo, double salarioEsperado) throws Exception {
+  public void CT005(String occupation, double expectSalary) throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", 2500.00, cargo);
-    funcionario.setFaltas(10);
-    ProcessadoraBonus pb = new ProcessadoraBonus();
+    Employee employee = new Employee("Fulano", 2500.00, occupation);
+    employee.setAttendances(10);
+    ProcessBonus pb = new ProcessBonus();
 
     // Act
-    pb.processar(funcionario);
+    pb.process(employee);
 
     // Assert
-    assertEquals(salarioEsperado, funcionario.getSalario(), 0.001);
+    assertEquals(expectSalary, employee.getSalary(), 0.001);
   }
 
   private static Stream<Arguments> CT005() {
@@ -125,10 +125,10 @@ public class FuncionarioBonusTest {
 
   @ParameterizedTest
   @MethodSource
-  public void CT006(String nome, String expectMessage) throws Exception {
+  public void CT006(String name, String expectMessage) throws Exception {
     // Arrange
     Exception exception = assertThrows(Exception.class, () -> {
-      new Funcionario(nome, 2500.00, "Gerente");
+      new Employee(name, 2500.00, "Gerente");
     });
 
     // Assert
@@ -143,10 +143,10 @@ public class FuncionarioBonusTest {
 
   @ParameterizedTest
   @MethodSource
-  public void CT007(String cargo, String expectMessage) throws Exception {
+  public void CT007(String occupation, String expectMessage) throws Exception {
     // Arrange
     Exception exception = assertThrows(Exception.class, () -> {
-      new Funcionario("Fulano", 2500.00, cargo);
+      new Employee("Fulano", 2500.00, occupation);
     });
 
     // Assert
@@ -162,12 +162,12 @@ public class FuncionarioBonusTest {
   @Test
   public void CT008() throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", 2500.00, "Programador");
+    Employee employee = new Employee("Fulano", 2500.00, "Programador");
     String expectMessage = "Distância não pode ser menor que zero!";
 
     // Act
     Exception exception = assertThrows(Exception.class, () -> {
-      funcionario.setDistanciaMoradia(-1);
+      employee.setDistance(-1);
     });
 
     // Assert
@@ -177,12 +177,12 @@ public class FuncionarioBonusTest {
   @Test
   public void CT009() throws Exception {
     // Arrange
-    Funcionario funcionario = new Funcionario("Fulano", 2500.00, "Programador");
+    Employee employee = new Employee("Fulano", 2500.00, "Programador");
     String expectMessage = "Faltas não pode ser menor que zero!";
 
     // Act
     Exception exception = assertThrows(Exception.class, () -> {
-      funcionario.setFaltas(-1);
+      employee.setAttendances(-1);
     });
 
     // Assert
@@ -193,7 +193,7 @@ public class FuncionarioBonusTest {
   public void CT010() throws Exception {
     // Arrange
     Exception exception = assertThrows(Exception.class, () -> {
-      new Funcionario("Fulano", 997.99, "Gerente");
+      new Employee("Fulano", 997.99, "Gerente");
     });
     String expectMessage = "\n#3 O salário base deve ser >= R$ 998,00";
 

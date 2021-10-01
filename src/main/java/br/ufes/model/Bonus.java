@@ -2,19 +2,19 @@ package br.ufes.model;
 
 public class Bonus {
 
-    private final String tipo;
-    private final double valor;
+    private final String type;
+    private final double value;
 
-    public Bonus(String tipo, double valor) {
-        this.tipo = tipo;
-        this.valor = valor;
+    public Bonus(String type, double value) {
+        this.type = type;
+        this.value = value;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public double getValor() {
-        return valor;
+    public double getValue() {
+        return value;
     }
 }
