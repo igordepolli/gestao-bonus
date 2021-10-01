@@ -1,6 +1,7 @@
 package br.ufes.main;
 
 import br.ufes.presenter.MainScreenPresenter;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -9,7 +10,7 @@ public class Main {
         try {
             MainScreenPresenter.getInstance();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ex.getMessage());
         }
 
     }
