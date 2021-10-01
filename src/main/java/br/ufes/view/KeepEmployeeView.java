@@ -52,18 +52,18 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Cargo");
 
-        cbxOccupation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diretor", "Gerente", "Vendedor", "Zelador" }));
-        cbxOccupation.setSelectedIndex(-1);
+        cbxOccupation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente", "Supervisor", "Programador" }));
+        cbxOccupation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxOccupationActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome");
 
-        jLabel3.setText("Distância");
+        jLabel3.setText("Distância(Km)");
 
-        try {
-            ffdDistance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        ffdDistance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
 
         jLabel5.setText("Salário");
 
@@ -180,6 +180,10 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbxOccupationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxOccupationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxOccupationActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;

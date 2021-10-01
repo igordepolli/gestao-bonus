@@ -44,11 +44,11 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Nome", "Idade", "Função", "Salário base (R$)"
+                "ID", "Nome", "Função", "Salário base (R$)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -61,8 +61,6 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
             tblEmployees.getColumnModel().getColumn(0).setMaxWidth(40);
             tblEmployees.getColumnModel().getColumn(1).setMinWidth(200);
             tblEmployees.getColumnModel().getColumn(1).setMaxWidth(200);
-            tblEmployees.getColumnModel().getColumn(2).setMinWidth(60);
-            tblEmployees.getColumnModel().getColumn(2).setMaxWidth(60);
         }
 
         btnClose.setText("Fechar");
