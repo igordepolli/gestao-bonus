@@ -50,6 +50,7 @@ public class SearchEmployeePresenter {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
+                    clearTable();
                     defineTableBehavior(view.getTfdName().getText());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -95,8 +96,8 @@ public class SearchEmployeePresenter {
 
     private void constructTableModel() {
         tableEmployees = new DefaultTableModel(
-                new Object[][][][]{},
-                new String[]{"ID", "Nome", "Idade", "Função", "Salário base (R$)"}
+                new Object[][][]{},
+                new String[]{"ID", "Nome", "Função", "Salário base (R$)"}
         );
 
         view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -151,7 +152,6 @@ public class SearchEmployeePresenter {
         tableEmployees.addRow(new Object[]{
             emp.getId(),
             emp.getName(),
-            emp.getDistance(),
             emp.getOccupation(),
             emp.getBaseSalary()
         });
@@ -165,7 +165,6 @@ public class SearchEmployeePresenter {
             tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
-                employee.getDistance(),
                 employee.getOccupation(),
                 employee.getBaseSalary()
             });

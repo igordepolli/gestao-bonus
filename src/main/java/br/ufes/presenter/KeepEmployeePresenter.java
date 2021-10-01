@@ -3,16 +3,10 @@ package br.ufes.presenter;
 import br.ufes.model.Bonus;
 import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
-import br.ufes.calculodebonus.CalculateAttendanceBonus;
-import br.ufes.calculodebonus.CalculateDistanceBonus;
-import br.ufes.calculodebonus.CalculateOccupationBonus;
 import br.ufes.presenter.command.KeepEmployeePresenterCommand;
 import br.ufes.presenter.state.KeepEmployeePresenterState;
-import br.ufes.utils.DateManipulation;
 import br.ufes.view.KeepEmployeeView;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.UUID;
 
 public class KeepEmployeePresenter {
@@ -90,7 +84,6 @@ public class KeepEmployeePresenter {
         employee.setDistance(getDistanceOfTextField());
         employee.setBaseSalary(getAndConvertSalaryField());
         employee.setAttendances(getAttendanceOfTextField());
-
     }
 
     public void getTextInFieldsAndSetEmployee() throws Exception {
@@ -99,7 +92,6 @@ public class KeepEmployeePresenter {
         employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
         employee.setName(view.getTfdName().getText());
         employee.setDistance(getDistanceOfTextField());
-        employee.getReceivedBonus().set(0, getInstanceOfBonus());
         employee.setAttendances(getAttendanceOfTextField());
 
     }
