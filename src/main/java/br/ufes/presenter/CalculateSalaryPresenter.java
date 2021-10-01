@@ -45,7 +45,11 @@ public class CalculateSalaryPresenter {
         view.getBtnSearch().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                
+                try {
+                    defineTableBehavior(view.getTfdSearch().getText());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -53,7 +57,7 @@ public class CalculateSalaryPresenter {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    loadBonus();
+                    loadEmployees();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -74,10 +78,41 @@ public class CalculateSalaryPresenter {
         });
     }
 
+    private void defineTableBehavior(String textInNameTextField) throws Exception {
+        clearTable();
+        searchEmployee(textInNameTextField);
+    }
+
+    private void searchEmployee(String name) throws Exception {
+        Employee emp = employeeCollection.searchEmployeeByName(name);
+
+        clearTable();
+        tableEmployees.addRow(new Object[]{
+            emp.getName(),
+            emp.getBaseSalary(),
+            emp.calculateTotalBonus(),
+            emp.getSalary()
+        });
+
+    }
+
+    private void loadEmployees() {
+        clearTable();
+
+        for (Employee employee : employeeCollection.getEmployees()) {
+            tableEmployees.addRow(new Object[]{
+                employee.getName(),
+                employee.getBaseSalary(),
+                employee.calculateTotalBonus(),
+                employee.getSalary()
+            });
+        }
+    }
+
     private void constructTableModel() {
         tableEmployees = new DefaultTableModel(
-                new Object[][][][]{},
-                new String[]{"Funcionário", "Data", "Salário Base (R$)", "Descrição do Bônus", "Bônus (R$)", "Salário (R$)"}
+                new Object[][][]{},
+                new String[]{"Funcionário", "Salário Base (R$)", "Bônus Recebido (R$)", "Salário (R$)"}
         );
 
         view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -94,10 +129,12 @@ public class CalculateSalaryPresenter {
     }
 
     private void calculateAllBonus() throws Exception {
+        
+        
         for (Employee emp : employeeCollection.getEmployees()) {
+            emp.resetListBonus();
             ProcessBonus calculateAllBonusByEmployee = new ProcessBonus();
-            calculateAllBonusByEmployee.process(emp);
-            emp.getSalary();
+            calculateAllBonusByEmployee.process(emp);         
         }
     }
 
