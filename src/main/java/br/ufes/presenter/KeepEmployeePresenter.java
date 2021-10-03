@@ -76,19 +76,23 @@ public class KeepEmployeePresenter {
 
         checkFieldsIsEmpty();
 
-        employee = new Employee();
-
-        employee.setId(generateRandomId());
-        setEmplyee();
+        employee = new Employee().setId(generateRandomId());
+        setEmployee();
     }
 
     public void getTextInFieldsAndSetEmployee() throws Exception {
         checkFieldsIsEmpty();
-        setEmplyee();
+        setEmployee();
     }
 
-    private void setEmplyee() throws Exception {
-        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
+    private void setEmployee() throws Exception {
+        
+        String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
+        
+        if(occupation.toLowerCase().equals("outro"))
+            occupation = view.getTfdOutro().getText();
+        
+        employee.setOccupation(occupation);
         employee.setName(view.getTfdName().getText());
         employee.setDistance(getDistanceOfTextField());
         employee.setAttendances(getAttendanceOfTextField());
@@ -123,8 +127,14 @@ public class KeepEmployeePresenter {
     }
 
     public void loadFields() throws Exception {
-
-        view.getCbxOccupation().setSelectedItem(employee.getOccupation());
+        String occupation = employee.getOccupation();
+        
+        if(!occupation.equals("Gerente") || !occupation.equals("Supervisor") || !occupation.equals("Programador")) {
+            occupation = "Outro";
+        }
+        
+        
+        view.getCbxOccupation().setSelectedItem(occupation);
         view.getTfdName().setText(employee.getName());
         view.getFfdDistance().setText(String.valueOf(employee.getDistance()));
         view.getTfdSalary().setValue(new BigDecimal(employee.getSalary()));
