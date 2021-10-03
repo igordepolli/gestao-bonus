@@ -9,6 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <sonar.organization>igordepolli</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -18,15 +20,15 @@
             <version>5.6.2</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>  
+    </dependencies>
     <build>
         <plugins>
             <!-- Necessário para executar o JUnit em projetos Maven -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
-            </plugin>            
-                        
+            </plugin>
+
             <!-- Necessário para executar o JUnit em projetos Maven -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -34,8 +36,8 @@
             </plugin>
 
             <!--
-             Plugin para computar cobertura de código: 
-             computar o percentual do código que está sendo coberto pelos 
+             Plugin para computar cobertura de código:
+             computar o percentual do código que está sendo coberto pelos
              testes unitários.
              https://www.jacoco.org/jacoco/trunk/doc/examples/build/pom.xml
             -->
@@ -53,12 +55,12 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/presenter/**</exclude>                        
+                        <exclude>**/presenter/**</exclude>
                         <exclude>**/view/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
         </plugins>
-    </build> 
+    </build>
 
 </project>
