@@ -32,7 +32,7 @@ class BonusProcessorTest {
   
     @ParameterizedTest
     @MethodSource
-    public void CT002(int distancia, double expectSalary) throws Exception {
+    void CT002(int distancia, double expectSalary) throws Exception {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Zelador");
         employee.setAttendances(10);

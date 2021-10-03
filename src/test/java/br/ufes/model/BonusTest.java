@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author mayco
  */
-public class BonusTest {
+class BonusTest {
   
     @Test    
     void testTipo() throws Exception {
