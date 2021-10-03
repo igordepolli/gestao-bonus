@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class EmployeeTest {
 
     @Test
-    public void CT001() throws Exception {
+    void CT001() throws Exception {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Gerente");
         double expectSalary = 2500.00;
@@ -26,7 +26,7 @@ public class EmployeeTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {998.0, 998.01})
-    public void CT002(double salario) throws Exception {
+    void CT002(double salario) throws Exception {
         // Arrange
         Employee employee = new Employee("Fulano", salario, "Gerente");
 
@@ -36,7 +36,7 @@ public class EmployeeTest {
 
     @ParameterizedTest
     @MethodSource
-    public void CT003(String name, String expectMessage) throws Exception {
+    void CT003(String name, String expectMessage) throws Exception {
         // Arrange
         Exception exception = assertThrows(Exception.class, () -> {
             new Employee(name, 2500.00, "Gerente");
@@ -54,7 +54,7 @@ public class EmployeeTest {
 
     @ParameterizedTest
     @MethodSource
-    public void CT004(String occupation, String expectMessage) throws Exception {
+    void CT004(String occupation, String expectMessage) throws Exception {
         // Arrange
         Exception exception = assertThrows(Exception.class, () -> {
             new Employee("Fulano", 2500.00, occupation);
@@ -71,7 +71,7 @@ public class EmployeeTest {
     }
 
     @Test
-    public void CT005() throws Exception {
+    void CT005() throws Exception {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Programador");
         String expectMessage = "Distância não pode ser menor que zero!";
@@ -86,7 +86,7 @@ public class EmployeeTest {
     }
 
     @Test
-    public void CT006() throws Exception {
+    void CT006() throws Exception {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Programador");
         String expectMessage = "Faltas não pode ser menor que zero!";
@@ -101,7 +101,7 @@ public class EmployeeTest {
     }
 
     @Test
-    public void CT007() throws Exception {
+    void CT007() throws Exception {
         // Arrange
         Exception exception = assertThrows(Exception.class, () -> {
             new Employee("Fulano", 997.99, "Gerente");
@@ -113,7 +113,7 @@ public class EmployeeTest {
     }
 
     @Test
-    public void CT008() throws Exception {
+    void CT008() throws Exception {
         //Arrange
         Employee employee = new Employee();
         String id = "aaa1";
