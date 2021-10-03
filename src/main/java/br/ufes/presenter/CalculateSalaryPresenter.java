@@ -1,6 +1,6 @@
 package br.ufes.presenter;
 
-import br.ufes.calculodebonus.ProcessBonus;
+import br.ufes.calculodebonus.BonusProcessor;
 import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.view.CalculateSalaryView;
@@ -71,7 +71,7 @@ public class CalculateSalaryPresenter {
                 try {
                     checkIfHasEmployeesInCollection();
                     calculateAllBonus();
-                    loadBonus();
+                    loadEmployees(employeeCollection.getEmployees());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -122,21 +122,19 @@ public class CalculateSalaryPresenter {
     }
 
     private void calculateAllBonus() throws Exception {
-        for (Employee emp : employeeCollection.getEmployees()) {
+        employeeCollection.getEmployees().stream().map(emp -> {
             emp.resetListBonus();
-            ProcessBonus calculateAllBonusByEmployee = new ProcessBonus();
-            calculateAllBonusByEmployee.process(emp);         
-        }
+            return emp;
+        }).forEachOrdered(emp -> {
+            BonusProcessor calculateAllBonusByEmployee = new BonusProcessor();
+            calculateAllBonusByEmployee.process(emp);
+        });
     }
 
     private void checkIfHasEmployeesInCollection() throws Exception {
         if (employeeCollection.isEmpty()) {
             throw new Exception("Não há funcionários para calcular o salário!");
         }
-    }
-
-    private void loadBonus() throws Exception {
-        clearTable();
     }
 
     public CalculateSalaryView getView() {

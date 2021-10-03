@@ -3,11 +3,11 @@ package br.ufes.calculodebonus;
 import br.ufes.model.Employee;
 import java.util.ArrayList;
 
-public class ProcessBonus {
+public class BonusProcessor {
 
     private final ArrayList<CalculateBonus> calculateBonusMethods;
 
-    public ProcessBonus() {
+    public BonusProcessor() {
         calculateBonusMethods = new ArrayList<>();
 
         this.calculateBonusMethods.add(new CalculateAttendanceBonus());

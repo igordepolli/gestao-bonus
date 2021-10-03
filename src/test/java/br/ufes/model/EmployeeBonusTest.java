@@ -1,6 +1,6 @@
-package br.ufes.projetos01;
+package br.ufes.model;
 
-import br.ufes.calculodebonus.ProcessBonus;
+import br.ufes.calculodebonus.BonusProcessor;
 import br.ufes.model.Employee;
 
 import java.util.stream.Stream;
@@ -67,7 +67,7 @@ public class EmployeeBonusTest {
     // Arrange
     Employee employee = new Employee("Fulano", 2500.00, "Zelador");
     employee.setAttendances(faltas);
-    ProcessBonus pb = new ProcessBonus();
+    BonusProcessor pb = new BonusProcessor();
 
     // Act
     pb.process(employee);
@@ -88,7 +88,7 @@ public class EmployeeBonusTest {
     Employee employee = new Employee("Fulano", 2500.00, "Zelador");
     employee.setAttendances(10);
     employee.setDistance(distancia);
-    ProcessBonus pb = new ProcessBonus();
+    BonusProcessor pb = new BonusProcessor();
 
     // Act
     pb.process(employee);
@@ -109,7 +109,7 @@ public class EmployeeBonusTest {
     // Arrange
     Employee employee = new Employee("Fulano", 2500.00, occupation);
     employee.setAttendances(10);
-    ProcessBonus pb = new ProcessBonus();
+    BonusProcessor pb = new BonusProcessor();
 
     // Act
     pb.process(employee);
