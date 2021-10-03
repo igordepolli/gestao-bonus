@@ -122,8 +122,6 @@ public class CalculateSalaryPresenter {
     }
 
     private void calculateAllBonus() throws Exception {
-        
-        
         for (Employee emp : employeeCollection.getEmployees()) {
             emp.resetListBonus();
             ProcessBonus calculateAllBonusByEmployee = new ProcessBonus();

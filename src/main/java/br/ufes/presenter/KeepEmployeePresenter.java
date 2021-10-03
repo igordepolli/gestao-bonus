@@ -79,23 +79,22 @@ public class KeepEmployeePresenter {
         employee = new Employee();
 
         employee.setId(generateRandomId());
-        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
-        employee.setName(view.getTfdName().getText());
-        employee.setDistance(getDistanceOfTextField());
-        employee.setBaseSalary(getAndConvertSalaryField());
-        employee.setAttendances(getAttendanceOfTextField());
+        setEmplyee();
     }
 
     public void getTextInFieldsAndSetEmployee() throws Exception {
         checkFieldsIsEmpty();
+        setEmplyee();
+    }
 
+    private void setEmplyee() throws Exception {
         employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
         employee.setName(view.getTfdName().getText());
         employee.setDistance(getDistanceOfTextField());
         employee.setAttendances(getAttendanceOfTextField());
-
+        employee.setBaseSalary(getAndConvertSalaryField());
     }
-
+    
     private boolean fieldsIsEmpty() {
         return view.getTfdName().getText().equals("")
                 || view.getTfdSalary().getText().equals("")

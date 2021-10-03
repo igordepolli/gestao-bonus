@@ -62,7 +62,9 @@ public class Employee {
         return this.baseSalary;
     }
 
-    public void setBaseSalary(double baseSalary) {
+    public void setBaseSalary(double baseSalary) throws Exception {
+        if (baseSalary < 998.0) 
+            throw new Exception("\n#3 O salário base deve ser >= R$ 998,00");
         this.baseSalary = baseSalary;
     }
 
