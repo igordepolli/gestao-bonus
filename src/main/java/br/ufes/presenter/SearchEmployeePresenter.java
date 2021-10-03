@@ -41,47 +41,35 @@ public class SearchEmployeePresenter {
     }
 
     private void initListeners() {
-        view.getBtnClose().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                view.dispose();
+        view.getBtnClose().addActionListener((ActionEvent arg0) -> {
+            view.dispose();
+        });
+
+        view.getBtnSearch().addActionListener((ActionEvent arg0) -> {
+            try {
+                defineTableBehavior(view.getTfdName().getText());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        view.getBtnSearch().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    defineTableBehavior(view.getTfdName().getText());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+        view.getBtnViewEmployee().addActionListener((ActionEvent arg0) -> {
+            try {
+                Employee emp = getEmployeeSelected();
+                KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                keepEmployeePresenter.setEmployee(emp);
+                keepEmployeePresenter.setState(new KeepEmployeePresenterViewState(keepEmployeePresenter, employeeCollection));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        view.getBtnViewEmployee().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    Employee emp = getEmployeeSelected();
-                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
-                    keepEmployeePresenter.setEmployee(emp);
-                    keepEmployeePresenter.setState(new KeepEmployeePresenterViewState(keepEmployeePresenter, employeeCollection));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        view.getBtnNewEmployee().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
-                    keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+        view.getBtnNewEmployee().addActionListener((ActionEvent arg0) -> {
+            try {
+                KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
