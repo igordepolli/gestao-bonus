@@ -51,6 +51,12 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/presenter/**</exclude>                        
+                        <exclude>**/view/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build> 
