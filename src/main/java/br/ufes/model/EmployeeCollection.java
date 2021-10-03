@@ -24,22 +24,24 @@ public class EmployeeCollection {
         employees.add(employee);
     }
 
-    public Employee searchEmployeeById(String id) throws Exception {
+    public Employee searchEmployeeById(String id){
         for (Employee employee : employees) {
             if (employee.getId().equals(id)) {
                 return employee;
             }
         }
-        throw new Exception("Funcionário não encontrado!");
+        return null;
     }
 
-    public Employee searchEmployeeByName(String name) throws Exception {
-        for (Employee employee : employees) {
-            if (employee.getName().toLowerCase().equals(name.toLowerCase())) {
-                return employee;
-            }
-        }
-        throw new Exception("Funcionário não encontrado!");
+    public List<Employee> searchEmployeeByName(String name){
+        List<Employee> employeesFiltered = new ArrayList<>();
+        
+        employees.stream()
+            .filter(employee -> (
+                employee.getName().toLowerCase()
+                    .contains(name.toLowerCase()))).forEachOrdered(employeesFiltered::add);
+        
+        return employeesFiltered;
     }
 
     public void updateEmployee(Employee employee) {

@@ -70,9 +70,9 @@ public class KeepEmployeePresenter {
     }
 
     public void createNewEmployee() throws Exception {
-        if (employee != null) {
+        /*if (employee != null) {
             throw new Exception("Não é possível criar um novo usuário!");
-        }
+        }*/
 
         checkFieldsIsEmpty();
 
