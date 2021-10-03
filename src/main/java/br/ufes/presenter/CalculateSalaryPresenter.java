@@ -88,7 +88,7 @@ public class CalculateSalaryPresenter {
         loadEmployees(searchEmployee);
     }
 
-    private List<Employee> searchEmployee(String name) throws AppExceptions {
+    private List<Employee> searchEmployee(String name) {
         return employeeCollection.searchEmployeeByName(name);
     }
 
@@ -124,7 +124,7 @@ public class CalculateSalaryPresenter {
         }
     }
 
-    private void calculateAllBonus() throws AppExceptions {
+    private void calculateAllBonus() {
         employeeCollection.getEmployees().stream().map(emp -> {
             emp.resetListBonus();
             return emp;
