@@ -38,9 +38,9 @@ public class CalculateSalaryPresenter {
     }
 
     private void initListeners() {
-        view.getBtnClose().addActionListener((ActionEvent arg0) -> {
-            view.dispose();
-        });
+        view.getBtnClose().addActionListener((ActionEvent arg0) ->
+            view.dispose()
+        );
 
         view.getBtnSearch().addActionListener((ActionEvent arg0) -> {
             try {
