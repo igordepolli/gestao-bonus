@@ -5,6 +5,8 @@ import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.view.MainScreenView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -23,7 +25,6 @@ public class MainScreenPresenter {
         view.setVisible(true);
         employeeCollection = EmployeeCollection.getInstance();
 
-        initPresenters();
         initListeners();
         setNumberOfEmployees();
     }
@@ -35,37 +36,40 @@ public class MainScreenPresenter {
         return instance;
     }
 
-    private void initPresenters() throws Exception {
-        keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
-        searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
-        calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection);
-
-        view.add(keepEmployeePresenter.getView());
-        view.add(searchEmployeePresenter.getView());
-        view.add(calculateSalaryPresenter.getView());
-
-    }
-
     private void initListeners() throws Exception {
         try {
             view.getMniKeepEmployee().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
+                    try {
+                        keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                        keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
+                        view.add(keepEmployeePresenter.getView());
+                    } catch (Exception ex) {
+                        Logger.getLogger(MainScreenPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
 
             view.getMniSearchEmployee().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    searchEmployeePresenter.getView().setVisible(true);
+                    try {
+                        searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
+                        view.add(searchEmployeePresenter.getView());
+                        searchEmployeePresenter.getView().setVisible(true);
+                    } catch (Exception ex) {
+                        Logger.getLogger(MainScreenPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
 
             view.getMniCalculateWages().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
+                    calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection);
                     calculateSalaryPresenter.getView().setVisible(true);
+                    view.add(calculateSalaryPresenter.getView());
                 }
             });
 

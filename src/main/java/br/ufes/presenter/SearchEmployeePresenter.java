@@ -17,7 +17,7 @@ public class SearchEmployeePresenter {
 
     private static SearchEmployeePresenter instance = null;
     private final SearchEmployeeView view;
-    private final EmployeeCollection employeeCollection;
+    private EmployeeCollection employeeCollection;
     private DefaultTableModel tableEmployees;
 
     private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
@@ -35,7 +35,8 @@ public class SearchEmployeePresenter {
         if (instance == null) {
             instance = new SearchEmployeePresenter(employeeCollection);
         }
-
+        
+        instance.employeeCollection = employeeCollection;
         return instance;
     }
 
@@ -51,7 +52,6 @@ public class SearchEmployeePresenter {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    clearTable();
                     defineTableBehavior(view.getTfdName().getText());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -140,8 +140,8 @@ public class SearchEmployeePresenter {
 
     private void defineTableBehavior(String textInNameTextField) throws Exception {
         List<Employee> employees;
-        
-        if (textInNameTextField.equals("")) {
+
+        if (textInNameTextField.isEmpty() || textInNameTextField.isBlank()) {
             employees = employeeCollection.getEmployees();
         } else {
             employees = searchEmployee(textInNameTextField);
@@ -157,15 +157,15 @@ public class SearchEmployeePresenter {
 
     private void loadEmployees(List<Employee> employees) {
         clearTable();
-
-        for (Employee employee : employees) {
+        System.out.println(employees.size());
+        employees.forEach(employee -> {
             tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
                 employee.getOccupation(),
                 employee.getBaseSalary()
             });
-        }
+        });
     }
 
     public SearchEmployeeView getView() {
