@@ -70,32 +70,35 @@ public class KeepEmployeePresenter {
     }
 
     public void createNewEmployee() throws Exception {
-        if (employee != null) {
+        /*if (employee != null) {
             throw new Exception("Não é possível criar um novo usuário!");
-        }
+        }*/
 
         checkFieldsIsEmpty();
 
-        employee = new Employee();
-
-        employee.setId(generateRandomId());
-        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
-        employee.setName(view.getTfdName().getText());
-        employee.setDistance(getDistanceOfTextField());
-        employee.setBaseSalary(getAndConvertSalaryField());
-        employee.setAttendances(getAttendanceOfTextField());
+        employee = new Employee().setId(generateRandomId());
+        setEmployee();
     }
 
     public void getTextInFieldsAndSetEmployee() throws Exception {
         checkFieldsIsEmpty();
+        setEmployee();
+    }
 
-        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
+    private void setEmployee() throws Exception {
+        
+        String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
+        
+        if(occupation.toLowerCase().equals("outro"))
+            occupation = view.getTfdOutro().getText();
+        
+        employee.setOccupation(occupation);
         employee.setName(view.getTfdName().getText());
         employee.setDistance(getDistanceOfTextField());
         employee.setAttendances(getAttendanceOfTextField());
-
+        employee.setBaseSalary(getAndConvertSalaryField());
     }
-
+    
     private boolean fieldsIsEmpty() {
         return view.getTfdName().getText().equals("")
                 || view.getTfdSalary().getText().equals("")
@@ -124,8 +127,14 @@ public class KeepEmployeePresenter {
     }
 
     public void loadFields() throws Exception {
-
-        view.getCbxOccupation().setSelectedItem(employee.getOccupation());
+        String occupation = employee.getOccupation();
+        
+        if(!occupation.equals("Gerente") || !occupation.equals("Supervisor") || !occupation.equals("Programador")) {
+            occupation = "Outro";
+        }
+        
+        
+        view.getCbxOccupation().setSelectedItem(occupation);
         view.getTfdName().setText(employee.getName());
         view.getFfdDistance().setText(String.valueOf(employee.getDistance()));
         view.getTfdSalary().setValue(new BigDecimal(employee.getSalary()));

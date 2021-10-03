@@ -6,6 +6,7 @@ import br.ufes.model.EmployeeCollection;
 import br.ufes.view.CalculateSalaryView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -57,7 +58,7 @@ public class CalculateSalaryPresenter {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    loadEmployees();
+                    loadEmployees(employeeCollection.getEmployees());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -80,33 +81,25 @@ public class CalculateSalaryPresenter {
 
     private void defineTableBehavior(String textInNameTextField) throws Exception {
         clearTable();
-        searchEmployee(textInNameTextField);
+        List<Employee> searchEmployee = searchEmployee(textInNameTextField);
+        loadEmployees(searchEmployee);
     }
 
-    private void searchEmployee(String name) throws Exception {
-        Employee emp = employeeCollection.searchEmployeeByName(name);
-
-        clearTable();
-        tableEmployees.addRow(new Object[]{
-            emp.getName(),
-            emp.getBaseSalary(),
-            emp.calculateTotalBonus(),
-            emp.getSalary()
-        });
-
+    private List<Employee> searchEmployee(String name) throws Exception {
+        return employeeCollection.searchEmployeeByName(name);
     }
 
-    private void loadEmployees() {
+    private void loadEmployees(List<Employee> employees) {
         clearTable();
 
-        for (Employee employee : employeeCollection.getEmployees()) {
+        employees.forEach(employee -> {
             tableEmployees.addRow(new Object[]{
                 employee.getName(),
                 employee.getBaseSalary(),
                 employee.calculateTotalBonus(),
                 employee.getSalary()
             });
-        }
+        });
     }
 
     private void constructTableModel() {
@@ -129,8 +122,6 @@ public class CalculateSalaryPresenter {
     }
 
     private void calculateAllBonus() throws Exception {
-        
-        
         for (Employee emp : employeeCollection.getEmployees()) {
             emp.resetListBonus();
             ProcessBonus calculateAllBonusByEmployee = new ProcessBonus();

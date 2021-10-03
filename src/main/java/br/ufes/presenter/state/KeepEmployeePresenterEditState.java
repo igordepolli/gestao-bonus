@@ -55,6 +55,7 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
     private void setFields() {
         presenter.getView().getCbxOccupation().setEnabled(true);
         presenter.getView().getTfdName().setEditable(true);
+        presenter.getView().getTfdOutro().setEditable(true);
         presenter.getView().getFfdDistance().setEditable(true);
         presenter.getView().getTfdSalary().setEditable(true);
         presenter.getView().getTfdAbsence().setEditable(true);

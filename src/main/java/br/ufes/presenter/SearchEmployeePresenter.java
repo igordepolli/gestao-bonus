@@ -8,6 +8,7 @@ import br.ufes.view.SearchEmployeeView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +27,7 @@ public class SearchEmployeePresenter {
         view.setLocation(20, 350);
 
         constructTableModel();
-        loadEmployees();
+        loadEmployees(employeeCollection.getEmployees());
         initListeners();
     }
 
@@ -99,7 +100,7 @@ public class SearchEmployeePresenter {
                 new Object[][][]{},
                 new String[]{"ID", "Nome", "Função", "Salário base (R$)"}
         );
-
+        
         view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableEmployees.setNumRows(0);
         view.getTblEmployees().setModel(tableEmployees);
@@ -138,30 +139,26 @@ public class SearchEmployeePresenter {
     }
 
     private void defineTableBehavior(String textInNameTextField) throws Exception {
+        List<Employee> employees;
+        
         if (textInNameTextField.equals("")) {
-            loadEmployees();
+            employees = employeeCollection.getEmployees();
         } else {
-            searchEmployee(textInNameTextField);
+            employees = searchEmployee(textInNameTextField);
         }
-    }
-
-    private void searchEmployee(String name) throws Exception {
-        Employee emp = employeeCollection.searchEmployeeByName(name);
-
-        clearTable();
-        tableEmployees.addRow(new Object[]{
-            emp.getId(),
-            emp.getName(),
-            emp.getOccupation(),
-            emp.getBaseSalary()
-        });
+        
+        loadEmployees(employees);
 
     }
 
-    private void loadEmployees() {
+    private List<Employee> searchEmployee(String name) throws Exception {
+        return employeeCollection.searchEmployeeByName(name);
+    }
+
+    private void loadEmployees(List<Employee> employees) {
         clearTable();
 
-        for (Employee employee : employeeCollection.getEmployees()) {
+        for (Employee employee : employees) {
             tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
