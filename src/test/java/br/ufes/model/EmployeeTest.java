@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *
  * @author clayton
  */
-public class EmployeeTest {
+class EmployeeTest {
 
     @Test
     void CT001() throws Exception {
