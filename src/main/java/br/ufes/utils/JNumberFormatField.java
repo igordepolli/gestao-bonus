@@ -51,7 +51,7 @@ public class JNumberFormatField extends JTextField {
                     text = new BigInteger(text).toString();
                 }
                 String limit = getLimit() <= text.length() == getLimit() > 0 ? text.substring(0, getLimit()) : text;
-                super.insertString(0, numberFormat.format(new BigDecimal(limit).divide(new BigDecimal(Math.pow(10, numberFormat.getMaximumFractionDigits())))), a);
+                super.insertString(0, numberFormat.format(new BigDecimal(limit).divide(new BigDecimal(String.valueOf(Math.pow(10, numberFormat.getMaximumFractionDigits()))))), a);
             }
 
             @Override
