@@ -1,6 +1,5 @@
 package br.ufes.presenter.command;
 
-import br.ufes.exceptions.AppExceptions;
 import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 
@@ -14,6 +13,6 @@ public abstract class KeepEmployeePresenterCommand {
         this.employeeCollection = employeeCollection;
     }
 
-    public abstract void execute() throws AppExceptions;
+    public abstract void execute();
 
 }

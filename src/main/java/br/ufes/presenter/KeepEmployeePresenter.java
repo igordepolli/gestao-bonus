@@ -25,7 +25,7 @@ public class KeepEmployeePresenter {
 
     }
 
-    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws AppExceptions {
+    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) {
         if (instance == null) {
             instance = new KeepEmployeePresenter();
         }
@@ -116,7 +116,7 @@ public class KeepEmployeePresenter {
         return salary;
     }
 
-    public void loadFields() throws AppExceptions {
+    public void loadFields() {
         String occupation = employee.getOccupation();
 
         if(!occupation.equals("Gerente") || !occupation.equals("Supervisor") || !occupation.equals("Programador")) {

@@ -52,7 +52,7 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
         }
     }
 
-    private boolean confirmDeleteEmployee() throws AppExceptions {
+    private boolean confirmDeleteEmployee() {
         int result = JOptionPane.showConfirmDialog(presenter.getView(), "Deseja mesmo remover o funcionário " + presenter.getEmployee().getName() + "?");
 
         return result == JOptionPane.YES_OPTION;

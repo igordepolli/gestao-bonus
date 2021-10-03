@@ -5,9 +5,7 @@ import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.presenter.state.KeepEmployeePresenterViewState;
 import br.ufes.view.SearchEmployeeView;
-import br.ufes.exceptions.AppExceptions;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,7 +19,7 @@ public class SearchEmployeePresenter {
     private EmployeeCollection employeeCollection;
     private DefaultTableModel tableEmployees;
 
-    private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws AppExceptions {
+    private SearchEmployeePresenter(EmployeeCollection employeeCollection) {
         this.employeeCollection = employeeCollection;
 
         view = new SearchEmployeeView();
@@ -32,7 +30,7 @@ public class SearchEmployeePresenter {
         initListeners();
     }
 
-    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws AppExceptions {
+    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) {
         if (instance == null) {
             instance = new SearchEmployeePresenter(employeeCollection);
         }
@@ -103,7 +101,7 @@ public class SearchEmployeePresenter {
         }
     }
 
-    private Employee getEmployeeSelected() throws AppExceptions {
+    private Employee getEmployeeSelected() {
         Employee employee = employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
 
         return employee;
@@ -127,7 +125,7 @@ public class SearchEmployeePresenter {
         }
     }
 
-    private void defineTableBehavior(String textInNameTextField) throws AppExceptions {
+    private void defineTableBehavior(String textInNameTextField) {
         List<Employee> employees;
 
         if (textInNameTextField.isEmpty() || textInNameTextField.isBlank()) {
@@ -140,7 +138,7 @@ public class SearchEmployeePresenter {
 
     }
 
-    private List<Employee> searchEmployee(String name) throws AppExceptions {
+    private List<Employee> searchEmployee(String name) {
         return employeeCollection.searchEmployeeByName(name);
     }
 

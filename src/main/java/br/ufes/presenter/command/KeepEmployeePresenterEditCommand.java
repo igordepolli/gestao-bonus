@@ -1,6 +1,5 @@
 package br.ufes.presenter.command;
 
-import br.ufes.exceptions.AppExceptions;
 import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 
@@ -11,7 +10,7 @@ public class KeepEmployeePresenterEditCommand extends KeepEmployeePresenterComma
     }
 
     @Override
-    public void execute() throws AppExceptions {
+    public void execute() {
         employeeCollection.updateEmployee(employee);
     }
 
