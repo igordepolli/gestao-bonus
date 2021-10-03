@@ -50,7 +50,7 @@ public class KeepEmployeePresenter {
     }
 
     private int getDistanceOfTextField() throws Exception {
-        int distance = Integer.parseInt(view.getFfdDistance().getText());
+        int distance = Integer.parseInt(view.getFfdDistance().getText().replace(",", ""));
 
         if (distance < 0) {
             throw new Exception("Não é possível cadastrar uma distância menor que 0!");
@@ -120,10 +120,6 @@ public class KeepEmployeePresenter {
         }
 
         return salary;
-    }
-
-    private Bonus getInstanceOfBonus() {
-        return null;
     }
 
     public void loadFields() throws Exception {
