@@ -123,11 +123,11 @@ public class EmployeeTest {
         double salarioBase = 1000;
         //Act
 
-        employee.setId("asd2");
-        employee.setName("Ciclano");
-        employee.setDistance(250);
-        employee.setOccupation("Gerente");
-        employee.setBaseSalary(4000.00);
+        employee.setId(id);
+        employee.setName(nome);
+        employee.setDistance(distancia);
+        employee.setOccupation(ocupacao);
+        employee.setBaseSalary(salarioBase);
 
         //Assert
         assertEquals(id, employee.getId());
