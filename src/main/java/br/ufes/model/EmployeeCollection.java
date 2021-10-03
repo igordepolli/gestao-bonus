@@ -11,12 +11,12 @@ public class EmployeeCollection {
     private EmployeeCollection() {
         employees = new ArrayList<>();
     }
-    
+
     public static EmployeeCollection getInstance() {
         if (instance == null) {
             instance = new EmployeeCollection();
         }
-        
+
         return instance;
     }
 
@@ -35,20 +35,26 @@ public class EmployeeCollection {
 
     public List<Employee> searchEmployeeByName(String name){
         List<Employee> employeesFiltered = new ArrayList<>();
-        
+
         employees.stream()
             .filter(employee -> (
                 employee.getName().toLowerCase()
                     .contains(name.toLowerCase()))).forEachOrdered(employeesFiltered::add);
-        
+
         return employeesFiltered;
     }
 
     public void updateEmployee(Employee employee) {
+        Employee employeeToDelete = null;
         for (Employee emp : employees) {
             if (emp.getId().equals(employee.getId())) {
-                emp = employee;
+                employeeToDelete = emp;
+                break;
             }
+        }
+        if (employeeToDelete != null) {
+          employees.remove(employeeToDelete);
+          employees.add(employee);
         }
     }
 
