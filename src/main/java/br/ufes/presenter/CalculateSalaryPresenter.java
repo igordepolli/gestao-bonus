@@ -16,7 +16,7 @@ public class CalculateSalaryPresenter {
     private static CalculateSalaryPresenter instance = null;
     private final CalculateSalaryView view;
     private DefaultTableModel tableEmployees;
-    private final EmployeeCollection employeeCollection;
+    private EmployeeCollection employeeCollection;
 
     private CalculateSalaryPresenter(EmployeeCollection employeeCollection) {
         this.employeeCollection = employeeCollection;
@@ -25,6 +25,7 @@ public class CalculateSalaryPresenter {
         view.setLocation(800, 20);
 
         constructTableModel();
+        loadEmployees(employeeCollection.getEmployees());
         initListeners();
     }
 
@@ -32,6 +33,7 @@ public class CalculateSalaryPresenter {
         if (instance == null) {
             instance = new CalculateSalaryPresenter(employeeCollection);
         }
+        instance.employeeCollection = employeeCollection;
         return instance;
     }
 
