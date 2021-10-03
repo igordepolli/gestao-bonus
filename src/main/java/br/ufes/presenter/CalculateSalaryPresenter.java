@@ -69,7 +69,7 @@ public class CalculateSalaryPresenter {
         });
     }
 
-    private void defineTableBehavior(String textInNameTextField) throws AppExceptions {
+    private void defineTableBehavior(String textInNameTextField) {
         clearTable();
         List<Employee> searchEmployee = searchEmployee(textInNameTextField);
         loadEmployees(searchEmployee);

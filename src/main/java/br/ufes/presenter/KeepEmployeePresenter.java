@@ -5,6 +5,7 @@ import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.command.KeepEmployeePresenterCommand;
 import br.ufes.presenter.state.KeepEmployeePresenterState;
 import br.ufes.view.KeepEmployeeView;
+import br.ufes.exceptions.AppExceptions;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public class KeepEmployeePresenter {
     private KeepEmployeePresenterState state;
     private Employee employee;
 
-    private KeepEmployeePresenter() throws Exception {
+    private KeepEmployeePresenter() {
         this.employee = null;
 
         view = new KeepEmployeeView();
@@ -24,7 +25,7 @@ public class KeepEmployeePresenter {
 
     }
 
-    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws AppExceptions {
         if (instance == null) {
             instance = new KeepEmployeePresenter();
         }
@@ -40,62 +41,58 @@ public class KeepEmployeePresenter {
         getView().getTfdAbsence().setText("");
     }
 
-    private void checkFieldsIsEmpty() throws Exception {
+    private void checkFieldsIsEmpty() throws AppExceptions {
         if (fieldsIsEmpty()) {
-            throw new Exception("TODOS os campos devem ser preenchidos!");
+            throw new AppExceptions("TODOS os campos devem ser preenchidos!");
         }
     }
 
-    private int getDistanceOfTextField() throws Exception {
+    private int getDistanceOfTextField() throws AppExceptions {
         int distance = Integer.parseInt(view.getFfdDistance().getText().replace(",", ""));
 
         if (distance < 0) {
-            throw new Exception("Não é possível cadastrar uma distância menor que 0!");
+            throw new AppExceptions("Não é possível cadastrar uma distância menor que 0!");
         }
 
         return distance;
     }
 
-    private int getAttendanceOfTextField() throws Exception {
+    private int getAttendanceOfTextField() throws AppExceptions {
         int numberOfAbsence = Integer.parseInt(view.getTfdAbsence().getText());
 
         if (numberOfAbsence < 0) {
-            throw new Exception("Número de faltas deve ser maior ou igual a zero!");
+            throw new AppExceptions("Número de faltas deve ser maior ou igual a zero!");
         }
 
         return numberOfAbsence;
     }
 
-    public void createNewEmployee() throws Exception {
-        /*if (employee != null) {
-            throw new Exception("Não é possível criar um novo usuário!");
-        }*/
-
+    public void createNewEmployee() throws AppExceptions {
         checkFieldsIsEmpty();
 
         employee = new Employee().setId(generateRandomId());
         setEmployee();
     }
 
-    public void getTextInFieldsAndSetEmployee() throws Exception {
+    public void getTextInFieldsAndSetEmployee() throws AppExceptions {
         checkFieldsIsEmpty();
         setEmployee();
     }
 
-    private void setEmployee() throws Exception {
-        
+    private void setEmployee() throws AppExceptions {
+
         String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
-        
+
         if(occupation.equalsIgnoreCase("outro"))
             occupation = view.getTfdOutro().getText();
-        
+
         employee.setOccupation(occupation);
         employee.setName(view.getTfdName().getText());
         employee.setDistance(getDistanceOfTextField());
         employee.setAttendances(getAttendanceOfTextField());
         employee.setBaseSalary(getAndConvertSalaryField());
     }
-    
+
     private boolean fieldsIsEmpty() {
         return view.getTfdName().getText().equals("")
                 || view.getTfdSalary().getText().equals("")
@@ -108,25 +105,25 @@ public class KeepEmployeePresenter {
         return UUID.randomUUID().toString();
     }
 
-    private double getAndConvertSalaryField() throws Exception {
+    private double getAndConvertSalaryField() throws AppExceptions {
         BigDecimal salaryValueBigDecimal = view.getTfdSalary().getValue();
         double salary = salaryValueBigDecimal.doubleValue();
 
         if (salary < 0) {
-            throw new Exception("Não é possível inserir um salário negativo!");
+            throw new AppExceptions("Não é possível inserir um salário negativo!");
         }
 
         return salary;
     }
 
-    public void loadFields() throws Exception {
+    public void loadFields() throws AppExceptions {
         String occupation = employee.getOccupation();
-        
+
         if(!occupation.equals("Gerente") || !occupation.equals("Supervisor") || !occupation.equals("Programador")) {
             occupation = "Outro";
         }
-        
-        
+
+
         view.getCbxOccupation().setSelectedItem(occupation);
         view.getTfdName().setText(employee.getName());
         view.getFfdDistance().setText(String.valueOf(employee.getDistance()));

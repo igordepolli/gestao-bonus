@@ -5,6 +5,7 @@ import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.presenter.state.KeepEmployeePresenterViewState;
 import br.ufes.view.SearchEmployeeView;
+import br.ufes.exceptions.AppExceptions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,7 +21,7 @@ public class SearchEmployeePresenter {
     private EmployeeCollection employeeCollection;
     private DefaultTableModel tableEmployees;
 
-    private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
+    private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws AppExceptions {
         this.employeeCollection = employeeCollection;
 
         view = new SearchEmployeeView();
@@ -31,11 +32,11 @@ public class SearchEmployeePresenter {
         initListeners();
     }
 
-    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws AppExceptions {
         if (instance == null) {
             instance = new SearchEmployeePresenter(employeeCollection);
         }
-        
+
         instance.employeeCollection = employeeCollection;
         return instance;
     }
@@ -88,7 +89,7 @@ public class SearchEmployeePresenter {
                 new Object[][][]{},
                 new String[]{"ID", "Nome", "Função", "Salário base (R$)"}
         );
-        
+
         view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableEmployees.setNumRows(0);
         view.getTblEmployees().setModel(tableEmployees);
@@ -102,7 +103,7 @@ public class SearchEmployeePresenter {
         }
     }
 
-    private Employee getEmployeeSelected() throws Exception {
+    private Employee getEmployeeSelected() throws AppExceptions {
         Employee employee = employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
 
         return employee;
@@ -126,7 +127,7 @@ public class SearchEmployeePresenter {
         }
     }
 
-    private void defineTableBehavior(String textInNameTextField) throws Exception {
+    private void defineTableBehavior(String textInNameTextField) throws AppExceptions {
         List<Employee> employees;
 
         if (textInNameTextField.isEmpty() || textInNameTextField.isBlank()) {
@@ -134,12 +135,12 @@ public class SearchEmployeePresenter {
         } else {
             employees = searchEmployee(textInNameTextField);
         }
-        
+
         loadEmployees(employees);
 
     }
 
-    private List<Employee> searchEmployee(String name) throws Exception {
+    private List<Employee> searchEmployee(String name) throws AppExceptions {
         return employeeCollection.searchEmployeeByName(name);
     }
 

@@ -3,8 +3,8 @@ package br.ufes.presenter;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.view.MainScreenView;
+import br.ufes.exceptions.AppExceptions;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -19,7 +19,7 @@ public class MainScreenPresenter {
     private SearchEmployeePresenter searchEmployeePresenter;
     private CalculateSalaryPresenter calculateSalaryPresenter;
 
-    private MainScreenPresenter() throws Exception {
+    private MainScreenPresenter() throws AppExceptions {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
@@ -29,14 +29,14 @@ public class MainScreenPresenter {
         setNumberOfEmployees();
     }
 
-    public static MainScreenPresenter getInstance() throws Exception {
+    public static MainScreenPresenter getInstance() throws AppExceptions {
         if (instance == null) {
             instance = new MainScreenPresenter();
         }
         return instance;
     }
 
-    private void initListeners() throws Exception {
+    private void initListeners() throws AppExceptions {
         try {
             view.getMniKeepEmployee().addActionListener((ActionEvent e) -> {
                 try {

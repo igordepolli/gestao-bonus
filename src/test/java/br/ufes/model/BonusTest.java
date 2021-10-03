@@ -5,6 +5,7 @@
  */
 package br.ufes.model;
 
+import br.ufes.exceptions.AppExceptions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
@@ -13,17 +14,17 @@ import org.junit.jupiter.api.Test;
  * @author mayco
  */
 class BonusTest {
-  
-    @Test    
-    void testTipo() throws Exception {
+
+    @Test
+    void testTipo() throws AppExceptions {
         // Arrange
         String tipo = "distancia";
         double valor = 200;
-        Bonus bonus = new Bonus(tipo, valor);   
+        Bonus bonus = new Bonus(tipo, valor);
 
         // Assert
         assertEquals(tipo, bonus.getType());
         assertEquals(valor, bonus.getValue());
     }
-  
+
 }

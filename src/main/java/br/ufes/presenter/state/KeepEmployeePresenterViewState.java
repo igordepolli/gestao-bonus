@@ -1,5 +1,6 @@
 package br.ufes.presenter.state;
 
+import br.ufes.exceptions.AppExceptions;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.KeepEmployeePresenter;
 import br.ufes.presenter.command.KeepEmployeePresenterDeleteCommand;
@@ -8,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
 
-    public KeepEmployeePresenterViewState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) throws Exception {
+    public KeepEmployeePresenterViewState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) throws AppExceptions {
         super(presenter, employeeCollection);
 
         setView();
@@ -51,7 +52,7 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
         }
     }
 
-    private boolean confirmDeleteEmployee() throws Exception {
+    private boolean confirmDeleteEmployee() throws AppExceptions {
         int result = JOptionPane.showConfirmDialog(presenter.getView(), "Deseja mesmo remover o funcionário " + presenter.getEmployee().getName() + "?");
 
         return result == JOptionPane.YES_OPTION;
@@ -65,7 +66,7 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
 
     private void setFields() {
         presenter.getView().getCbxOccupation().setEnabled(false);
-        presenter.getView().getTfdName().setEditable(false);        
+        presenter.getView().getTfdName().setEditable(false);
         presenter.getView().getTfdOutro().setEditable(false);
         presenter.getView().getFfdAge().setEditable(false);
         presenter.getView().getTfdSalary().setEditable(false);

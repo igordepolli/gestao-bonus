@@ -1,5 +1,6 @@
 package br.ufes.model;
 
+import br.ufes.exceptions.AppExceptions;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class EmployeeTest {
 
     @Test
-    void CT001() throws Exception {
+    void CT001() throws AppExceptions {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Gerente");
         double expectSalary = 2500.00;
@@ -26,7 +27,7 @@ class EmployeeTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {998.0, 998.01})
-    void CT002(double salario) throws Exception {
+    void CT002(double salario) throws AppExceptions {
         // Arrange
         Employee employee = new Employee("Fulano", salario, "Gerente");
 
@@ -36,7 +37,7 @@ class EmployeeTest {
 
     @ParameterizedTest
     @MethodSource
-    void CT003(String name, String expectMessage) throws Exception {
+    void CT003(String name, String expectMessage) throws AppExceptions {
         // Arrange
         Exception exception = assertThrows(Exception.class, () -> {
             new Employee(name, 2500.00, "Gerente");
@@ -54,7 +55,7 @@ class EmployeeTest {
 
     @ParameterizedTest
     @MethodSource
-    void CT004(String occupation, String expectMessage) throws Exception {
+    void CT004(String occupation, String expectMessage) throws AppExceptions {
         // Arrange
         Exception exception = assertThrows(Exception.class, () -> {
             new Employee("Fulano", 2500.00, occupation);
@@ -71,7 +72,7 @@ class EmployeeTest {
     }
 
     @Test
-    void CT005() throws Exception {
+    void CT005() throws AppExceptions {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Programador");
         String expectMessage = "Distância não pode ser menor que zero!";
@@ -86,7 +87,7 @@ class EmployeeTest {
     }
 
     @Test
-    void CT006() throws Exception {
+    void CT006() throws AppExceptions {
         // Arrange
         Employee employee = new Employee("Fulano", 2500.00, "Programador");
         String expectMessage = "Faltas não pode ser menor que zero!";
@@ -101,7 +102,7 @@ class EmployeeTest {
     }
 
     @Test
-    void CT007() throws Exception {
+    void CT007() throws AppExceptions {
         // Arrange
         Exception exception = assertThrows(Exception.class, () -> {
             new Employee("Fulano", 997.99, "Gerente");
@@ -113,7 +114,7 @@ class EmployeeTest {
     }
 
     @Test
-    void CT008() throws Exception {
+    void CT008() throws AppExceptions {
         //Arrange
         Employee employee = new Employee();
         String id = "aaa1";
