@@ -4,6 +4,7 @@ import br.ufes.calculodebonus.BonusProcessor;
 import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.view.CalculateSalaryView;
+import br.ufes.exceptions.AppExceptions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -81,27 +82,27 @@ public class CalculateSalaryPresenter {
         });
     }
 
-    private void defineTableBehavior(String textInNameTextField) throws Exception {
+    private void defineTableBehavior(String textInNameTextField) throws AppExceptions {
         clearTable();
         List<Employee> searchEmployee = searchEmployee(textInNameTextField);
         loadEmployees(searchEmployee);
     }
 
-    private List<Employee> searchEmployee(String name) throws Exception {
+    private List<Employee> searchEmployee(String name) throws AppExceptions {
         return employeeCollection.searchEmployeeByName(name);
     }
 
     private void loadEmployees(List<Employee> employees) {
         clearTable();
 
-        employees.forEach(employee -> {
+        employees.forEach(employee ->
             tableEmployees.addRow(new Object[]{
                 employee.getName(),
                 employee.getBaseSalary(),
                 employee.calculateTotalBonus(),
                 employee.getSalary()
-            });
-        });
+            })
+        );
     }
 
     private void constructTableModel() {
@@ -123,7 +124,7 @@ public class CalculateSalaryPresenter {
         }
     }
 
-    private void calculateAllBonus() throws Exception {
+    private void calculateAllBonus() throws AppExceptions {
         employeeCollection.getEmployees().stream().map(emp -> {
             emp.resetListBonus();
             return emp;
@@ -133,9 +134,9 @@ public class CalculateSalaryPresenter {
         });
     }
 
-    private void checkIfHasEmployeesInCollection() throws Exception {
+    private void checkIfHasEmployeesInCollection() throws AppExceptions {
         if (employeeCollection.isEmpty()) {
-            throw new Exception("Não há funcionários para calcular o salário!");
+            throw new AppExceptions("Não há funcionários para calcular o salário!");
         }
     }
 
