@@ -1,6 +1,5 @@
 package br.ufes.presenter;
 
-import br.ufes.model.Bonus;
 import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.command.KeepEmployeePresenterCommand;
@@ -16,11 +15,9 @@ public class KeepEmployeePresenter {
     private KeepEmployeePresenterCommand command;
     private KeepEmployeePresenterState state;
     private Employee employee;
-    private final EmployeeCollection employeeCollection;
 
-    private KeepEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
+    private KeepEmployeePresenter() throws Exception {
         this.employee = null;
-        this.employeeCollection = employeeCollection;
 
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
@@ -29,7 +26,7 @@ public class KeepEmployeePresenter {
 
     public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
         if (instance == null) {
-            instance = new KeepEmployeePresenter(employeeCollection);
+            instance = new KeepEmployeePresenter();
         }
 
         return instance;
@@ -89,7 +86,7 @@ public class KeepEmployeePresenter {
         
         String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
         
-        if(occupation.toLowerCase().equals("outro"))
+        if(occupation.equalsIgnoreCase("outro"))
             occupation = view.getTfdOutro().getText();
         
         employee.setOccupation(occupation);

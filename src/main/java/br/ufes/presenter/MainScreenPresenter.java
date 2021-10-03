@@ -38,39 +38,30 @@ public class MainScreenPresenter {
 
     private void initListeners() throws Exception {
         try {
-            view.getMniKeepEmployee().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
-                        keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
-                        view.add(keepEmployeePresenter.getView());
-                    } catch (Exception ex) {
-                        Logger.getLogger(MainScreenPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            view.getMniKeepEmployee().addActionListener((ActionEvent e) -> {
+                try {
+                    keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
+                    view.add(keepEmployeePresenter.getView());
+                } catch (Exception ex) {
+                    Logger.getLogger(MainScreenPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
 
-            view.getMniSearchEmployee().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    try {
-                        searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
-                        view.add(searchEmployeePresenter.getView());
-                        searchEmployeePresenter.getView().setVisible(true);
-                    } catch (Exception ex) {
-                        Logger.getLogger(MainScreenPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            view.getMniSearchEmployee().addActionListener((ActionEvent arg0) -> {
+                try {
+                    searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
+                    view.add(searchEmployeePresenter.getView());
+                    searchEmployeePresenter.getView().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(MainScreenPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
 
-            view.getMniCalculateWages().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent arg0) {
-                    calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection);
-                    calculateSalaryPresenter.getView().setVisible(true);
-                    view.add(calculateSalaryPresenter.getView());
-                }
+            view.getMniCalculateWages().addActionListener((ActionEvent arg0) -> {
+                calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection);
+                calculateSalaryPresenter.getView().setVisible(true);
+                view.add(calculateSalaryPresenter.getView());
             });
 
         } catch (Exception ex) {

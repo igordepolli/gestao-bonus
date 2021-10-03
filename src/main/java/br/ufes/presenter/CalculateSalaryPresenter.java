@@ -5,7 +5,6 @@ import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.view.CalculateSalaryView;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -38,45 +37,33 @@ public class CalculateSalaryPresenter {
     }
 
     private void initListeners() {
-        view.getBtnClose().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                view.dispose();
+        view.getBtnClose().addActionListener((ActionEvent arg0) -> {
+            view.dispose();
+        });
+
+        view.getBtnSearch().addActionListener((ActionEvent arg0) -> {
+            try {
+                defineTableBehavior(view.getTfdSearch().getText());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        view.getBtnSearch().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    defineTableBehavior(view.getTfdSearch().getText());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+        view.getBtnListAll().addActionListener((ActionEvent arg0) -> {
+            try {
+                loadEmployees(employeeCollection.getEmployees());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        view.getBtnListAll().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    loadEmployees(employeeCollection.getEmployees());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        view.getBtnCalculate().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    checkIfHasEmployeesInCollection();
-                    calculateAllBonus();
-                    loadEmployees(employeeCollection.getEmployees());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
+        view.getBtnCalculate().addActionListener((ActionEvent arg0) -> {
+            try {
+                checkIfHasEmployeesInCollection();
+                calculateAllBonus();
+                loadEmployees(employeeCollection.getEmployees());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

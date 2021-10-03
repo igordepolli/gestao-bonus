@@ -4,7 +4,6 @@ import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.KeepEmployeePresenter;
 import br.ufes.presenter.command.KeepEmployeePresenterDeleteCommand;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
@@ -20,25 +19,16 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
     }
 
     private void initListeners() {
-        presenter.getView().getBtnClose().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                presenter.getView().dispose();
-            }
+        presenter.getView().getBtnClose().addActionListener((ActionEvent arg0) -> {
+            presenter.getView().dispose();
         });
 
-        presenter.getView().getBtnEdit().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                update();
-            }
+        presenter.getView().getBtnEdit().addActionListener((ActionEvent arg0) -> {
+            update();
         });
 
-        presenter.getView().getBtnDelete().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                delete();
-            }
+        presenter.getView().getBtnDelete().addActionListener((ActionEvent arg0) -> {
+            delete();
         });
     }
 
