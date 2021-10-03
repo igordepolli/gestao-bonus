@@ -13,16 +13,17 @@ import org.junit.jupiter.api.Test;
  * @author mayco
  */
 public class BonusTest {
-  @Test
-  public void testTipo() throws Exception {
-    // Arrange
-    String tipo = "distancia";
-    double valor = 200;
-    Bonus bonus = new Bonus(tipo, valor);   
-    
-    // Assert
-    assertEquals(tipo, bonus.getType());
-    assertEquals(valor, bonus.getValue());
-  }
+  
+    @Test    
+    void testTipo() throws Exception {
+        // Arrange
+        String tipo = "distancia";
+        double valor = 200;
+        Bonus bonus = new Bonus(tipo, valor);   
+
+        // Assert
+        assertEquals(tipo, bonus.getType());
+        assertEquals(valor, bonus.getValue());
+    }
   
 }
