@@ -133,7 +133,7 @@ public class KeepEmployeePresenter {
         view.getCbxOccupation().setSelectedItem(occupation);
         view.getTfdName().setText(employee.getName());
         view.getFfdDistance().setText(String.valueOf(employee.getDistance()));
-        view.getTfdSalary().setValue(new BigDecimal(employee.getSalary()));
+        view.getTfdSalary().setValue(new BigDecimal(String.valueOf(employee.getSalary())));
         view.getTfdAbsence().setText(String.valueOf(employee.getAttendances()));
 
     }

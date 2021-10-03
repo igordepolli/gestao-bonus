@@ -50,7 +50,7 @@ public class JNumberFormatField extends JTextField {
                 } else {
                     text = new BigInteger(text).toString();
                 }
-                super.insertString(0, numberFormat.format(new BigDecimal(getLimit() > 0 == text.length() > getLimit() ? text.substring(0, getLimit()) : text).divide(new BigDecimal(Math.pow(10, numberFormat.getMaximumFractionDigits())))), a);
+                super.insertString(0, numberFormat.format(new BigDecimal(String.valueOf(getLimit() > 0 == text.length() > getLimit() ? text.substring(0, getLimit()) : text)).divide(new BigDecimal(Math.pow(10, numberFormat.getMaximumFractionDigits())))), a);
             }
 
             @Override
@@ -105,7 +105,7 @@ public class JNumberFormatField extends JTextField {
      * @return
      */
     public final BigDecimal getValue() {
-        return new BigDecimal(getText().replaceAll("[^0-9]", "")).divide(new BigDecimal(Math.pow(10, numberFormat.getMaximumFractionDigits())));
+        return new BigDecimal(getText().replaceAll("[^0-9]", "")).divide(new BigDecimal(String.valueOf(Math.pow(10, numberFormat.getMaximumFractionDigits()))));
     }
 
     /**
