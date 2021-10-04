@@ -30,6 +30,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame implements IE
         btnClose = new javax.swing.JButton();
         btnViewEmployee = new javax.swing.JButton();
         btnNewEmployee = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Buscar Funcionário");
@@ -70,6 +71,13 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame implements IE
 
         btnNewEmployee.setText("Novo");
 
+        btnExportar.setText("Exportar");
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,6 +87,8 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame implements IE
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnClose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnExportar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNewEmployee)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -90,7 +100,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame implements IE
                         .addComponent(tfdName, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,15 +116,21 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame implements IE
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
                     .addComponent(btnViewEmployee)
-                    .addComponent(btnNewEmployee))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(btnNewEmployee)
+                    .addComponent(btnExportar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnNewEmployee;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnViewEmployee;
@@ -148,4 +164,10 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame implements IE
     public JTextField getTfdName() {
         return tfdName;
     }
+
+    public JButton getBtnExportar() {
+        return btnExportar;
+    }
+    
+    
 }

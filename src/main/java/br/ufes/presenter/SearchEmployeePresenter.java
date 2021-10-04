@@ -6,8 +6,13 @@ import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.presenter.state.KeepEmployeePresenterViewState;
 import br.ufes.utils.EmployeeTableConstructor;
 import br.ufes.view.SearchEmployeeView;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -83,6 +88,46 @@ public class SearchEmployeePresenter {
                 if (view.getTblEmployees().getSelectedRow() > -1) {
                     changeView();
                 }
+            }
+        });
+        
+        view.getBtnExportar().addActionListener((ActionEvent arg0) -> {
+            try {
+                //Path onde o arquivo será salvo
+                File file = new File("C:\\Users\\mayco\\Desktop\\TextExportjTable.txt");
+
+                //Caso o arquivo não exista então cria-se um novo arquivo
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                try ( FileWriter fw = new FileWriter(file.getAbsoluteFile());  BufferedWriter bw = new BufferedWriter(fw)) {
+                    //Laço que percorre as colunas da jTable recuperando o nome das mesmas
+                    for (int i = 0; i < tableEmployees.getColumnCount(); i++) {
+                        bw.write(tableEmployees.getColumnName(i) + " ");
+                    }
+
+                    //Quebra de linha no arquivo .txt
+                    //Windows: \r\n | Linux: \n
+                    bw.write("\r\n");
+
+                    //Laço que percorre as linhas da jTable
+                    for (int i = 0; i < tableEmployees.getRowCount(); i++) {
+
+                        //Laço que percorre as colunas da jTable recuperando os valores
+                        for (int j = 0; j < tableEmployees.getColumnCount(); j++) {
+                            bw.write(tableEmployees.getValueAt(i, j) + " ");
+                        }
+
+                        //Quebra de linha no arquivo .txt
+                        //Windows: \r\n | Linux: \n
+                        bw.write("\r\n");
+                    }
+                }
+
+                JOptionPane.showMessageDialog(view, "Dados exportados com sucesso!");
+            } catch (HeadlessException | IOException ex) {
+                JOptionPane.showMessageDialog(view, "Erro ao exportar os dados.");
             }
         });
     }
