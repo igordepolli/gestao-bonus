@@ -65,7 +65,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Distância(Km)");
 
-        ffdDistance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        ffdDistance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         jLabel5.setText("Salário");
 

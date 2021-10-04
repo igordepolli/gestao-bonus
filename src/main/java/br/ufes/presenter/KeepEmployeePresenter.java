@@ -118,7 +118,7 @@ public class KeepEmployeePresenter {
     public void loadFields() {
         String occupation = employee.getOccupation();
 
-        if(!occupation.equals("Gerente") || !occupation.equals("Supervisor") || !occupation.equals("Programador")) {
+        if(!occupation.equals("Gerente") && !occupation.equals("Supervisor") && !occupation.equals("Programador")) {
             occupation = "Outro";
         }
 

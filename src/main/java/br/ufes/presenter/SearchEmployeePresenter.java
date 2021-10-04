@@ -4,40 +4,34 @@ import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.presenter.state.KeepEmployeePresenterViewState;
+import br.ufes.strategy.EmployeeStategyTXT;
+import br.ufes.strategy.ManagerStrategy;
 import br.ufes.utils.EmployeeTableConstructor;
 import br.ufes.view.SearchEmployeeView;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.util.logging.Logger;
 
 public class SearchEmployeePresenter {
 
     private static SearchEmployeePresenter instance = null;
     private final SearchEmployeeView view;
     private EmployeeCollection employeeCollection;
-    private final DefaultTableModel tableEmployees;    
+    private final DefaultTableModel tableEmployees;
     private final EmployeeTableConstructor empTable;
-    Logger logger = Logger.getLogger(SearchEmployeePresenter.class.getName());
 
     private SearchEmployeePresenter(EmployeeCollection employeeCollection) {
         this.employeeCollection = employeeCollection;
 
         view = new SearchEmployeeView();
         view.setLocation(20, 350);
-        
+
         empTable = new EmployeeTableConstructor(new String[]{"ID", "Nome", "Função", "Salário base (R$)"});
         tableEmployees = empTable.getTable();
         empTable.constructTable(view);
-        
+
         loadEmployees(employeeCollection.getEmployees());
         initListeners();
     }
@@ -52,8 +46,8 @@ public class SearchEmployeePresenter {
     }
 
     private void initListeners() {
-        view.getBtnClose().addActionListener((ActionEvent arg0) ->
-            view.dispose()
+        view.getBtnClose().addActionListener((ActionEvent arg0)
+                -> view.dispose()
         );
 
         view.getBtnSearch().addActionListener((ActionEvent arg0) -> {
@@ -92,47 +86,21 @@ public class SearchEmployeePresenter {
                 }
             }
         });
-        
+
         view.getBtnExportar().addActionListener((ActionEvent arg0) -> {
-            try {
-                //Path onde o arquivo será salvo
-                File file = new File("C:\\TextExportjTable.txt");
 
-                //Caso o arquivo não exista então cria-se um novo arquivo
-                if (file.createNewFile()) {
-                    logger.log(Level.INFO, "Arquivo criado");
-                }else{
-                    logger.log(Level.INFO, "Arquivo já existente. Foi sobrescrito");
-                }
-
-                try ( FileWriter fw = new FileWriter(file.getAbsoluteFile());  BufferedWriter bw = new BufferedWriter(fw)) {
-                    //Laço que percorre as colunas da jTable recuperando o nome das mesmas
-                    for (int i = 0; i < tableEmployees.getColumnCount(); i++) {
-                        bw.write(tableEmployees.getColumnName(i) + " ");
-                    }
-
-                    //Quebra de linha no arquivo .txt
-                    //Windows: \r\n | Linux: \n
-                    bw.write("\r\n");
-
-                    //Laço que percorre as linhas da jTable
-                    for (int i = 0; i < tableEmployees.getRowCount(); i++) {
-
-                        //Laço que percorre as colunas da jTable recuperando os valores
-                        for (int j = 0; j < tableEmployees.getColumnCount(); j++) {
-                            bw.write(tableEmployees.getValueAt(i, j) + " ");
-                        }
-
-                        //Quebra de linha no arquivo .txt
-                        //Windows: \r\n | Linux: \n
-                        bw.write("\r\n");
-                    }
-                }
-
+            List<Employee> employees;
+            employees = employeeCollection.getEmployees();
+            if (!employees.isEmpty()) {
+                ManagerStrategy manager = new ManagerStrategy(new EmployeeStategyTXT());
+                manager.getLog().whiteEmployees(employees);
                 JOptionPane.showMessageDialog(view, "Dados exportados com sucesso!");
-            } catch (HeadlessException | IOException ex) {
-                JOptionPane.showMessageDialog(view, "Erro ao exportar os dados.");
+            } else {
+                JOptionPane.showMessageDialog(view, "Não há funcionarios para Exportação!");
             }
+
+            
+
         });
     }
 
@@ -173,13 +141,13 @@ public class SearchEmployeePresenter {
 
     private void loadEmployees(List<Employee> employees) {
         empTable.clearTable(this.tableEmployees);
-        employees.forEach(employee ->
-            tableEmployees.addRow(new Object[]{
-                employee.getId(),
-                employee.getName(),
-                employee.getOccupation(),
-                employee.getBaseSalary()
-            })
+        employees.forEach(employee
+                -> tableEmployees.addRow(new Object[]{
+            employee.getId(),
+            employee.getName(),
+            employee.getOccupation(),
+            employee.getBaseSalary()
+        })
         );
     }
 
