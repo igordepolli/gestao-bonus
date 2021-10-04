@@ -10,6 +10,7 @@ import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.strategy.EmployeeStategyTXT;
 import br.ufes.strategy.ManagerStrategy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author W-E-R
  */
-public class StategyTest {
+class StategyTest {
 
     EmployeeCollection collection;
 
@@ -36,6 +37,9 @@ public class StategyTest {
         ManagerStrategy manager = new ManagerStrategy(new EmployeeStategyTXT());
         manager.setLog(new EmployeeStategyTXT());
         manager.getLog().whiteEmployees(collection.getEmployees());
+        
+        // Assert
+        assertEquals(2, collection.getEmployees().size());
 
     }
 }

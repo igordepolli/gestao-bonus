@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,7 +23,7 @@ public class EmployeeStategyTXT implements EmployeeStategy {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("ExportTXT.txt", true))) {
             bw.write("Funcionário(s): [");
             bw.newLine();
-            
+
             for (Employee emp : employees) {
                 bw.newLine();
                 bw.write("ID: " + emp.getId());
@@ -32,13 +33,11 @@ public class EmployeeStategyTXT implements EmployeeStategy {
                 bw.write("Cargo: " + emp.getOccupation());
                 bw.newLine();
                 bw.newLine();
-                
             }
             bw.write("]");
             bw.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-
 }
