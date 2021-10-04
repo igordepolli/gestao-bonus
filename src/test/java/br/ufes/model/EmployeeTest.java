@@ -141,14 +141,13 @@ class EmployeeTest {
 
     @Test
     void CT009() throws AppExceptions {
-        // Arrange
-        
-        
+// Arrange
+        Employee emp = new Employee("Fulano", 1000, "Gerente");
+
         AppExceptions exception = assertThrows(AppExceptions.class, () -> {
-           Employee emp = new Employee("Fulano", 1000, "Gerente");
             emp.setBaseSalary(997.99);
         });
-        
+
         String expectMessage = "\n#3 O salário base deve ser >= R$ 998,00";
 
         // Assert
