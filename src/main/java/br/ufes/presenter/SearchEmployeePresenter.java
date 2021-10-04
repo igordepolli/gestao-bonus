@@ -94,11 +94,13 @@ public class SearchEmployeePresenter {
         view.getBtnExportar().addActionListener((ActionEvent arg0) -> {
             try {
                 //Path onde o arquivo será salvo
-                File file = new File("C:\\Users\\mayco\\Desktop\\TextExportjTable.txt");
+                File file = new File("C:\\TextExportjTable.txt");
 
                 //Caso o arquivo não exista então cria-se um novo arquivo
-                if (!file.exists()) {
-                    file.createNewFile();
+                if (file.createNewFile()) {
+                    System.out.println("Arquivo criado");
+                }else{
+                    System.out.println("Arquivo já existente");
                 }
 
                 try ( FileWriter fw = new FileWriter(file.getAbsoluteFile());  BufferedWriter bw = new BufferedWriter(fw)) {
