@@ -1,6 +1,6 @@
 package br.ufes.utils;
 
-import br.ufes.exceptions.AppExceptions;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ public class DateManipulation {
       throw new IllegalStateException("Utility class");
     }
 
-    public static LocalDate stringToLocalDate(String dateString) throws AppExceptions {
+    public static LocalDate stringToLocalDate(String dateString) throws ParseException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dateString, dtf);
     }
