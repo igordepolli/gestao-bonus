@@ -82,3 +82,15 @@ Nome: Wer
 Cargo: Gerente
 
 ]
+Funcionário(s): [
+
+ID: null
+Nome: Werikis
+Cargo: Gerente
+
+
+ID: null
+Nome: Wer
+Cargo: Gerente
+
+]
