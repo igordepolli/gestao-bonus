@@ -14,8 +14,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.logging.Logger;
 
 public class SearchEmployeePresenter {
 
@@ -24,7 +26,7 @@ public class SearchEmployeePresenter {
     private EmployeeCollection employeeCollection;
     private final DefaultTableModel tableEmployees;    
     private final EmployeeTableConstructor empTable;
-
+    Logger logger = Logger.getLogger(SearchEmployeePresenter.class.getName());
 
     private SearchEmployeePresenter(EmployeeCollection employeeCollection) {
         this.employeeCollection = employeeCollection;
@@ -98,9 +100,9 @@ public class SearchEmployeePresenter {
 
                 //Caso o arquivo não exista então cria-se um novo arquivo
                 if (file.createNewFile()) {
-                    System.out.println("Arquivo criado");
+                    logger.log(Level.INFO, "Arquivo criado");
                 }else{
-                    System.out.println("Arquivo já existente");
+                    logger.log(Level.INFO, "Arquivo já existente. Foi sobrescrito");
                 }
 
                 try ( FileWriter fw = new FileWriter(file.getAbsoluteFile());  BufferedWriter bw = new BufferedWriter(fw)) {
