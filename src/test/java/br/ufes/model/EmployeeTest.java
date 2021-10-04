@@ -1,6 +1,7 @@
 package br.ufes.model;
 
 import br.ufes.exceptions.AppExceptions;
+import com.sun.tools.javac.util.Assert;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -141,11 +142,12 @@ class EmployeeTest {
     @Test
     void CT009() throws AppExceptions {
         // Arrange
-        Exception exception = assertThrows(Exception.class, () -> {
+        
+        
+        AppExceptions exception = assertThrows(AppExceptions.class, () -> {
            Employee emp = new Employee("Fulano", 1000, "Gerente");
             emp.setBaseSalary(997.99);
         });
-        
         
         String expectMessage = "\n#3 O salário base deve ser >= R$ 998,00";
 

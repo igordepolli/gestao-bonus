@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author W-E-R
  */
-public class EmployeeCollectionTest {
+class EmployeeCollectionTest {
 
     EmployeeCollection collection;
 
