@@ -1,7 +1,6 @@
 package br.ufes.presenter;
 
 import br.ufes.model.Employee;
-import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.command.KeepEmployeePresenterCommand;
 import br.ufes.presenter.state.KeepEmployeePresenterState;
 import br.ufes.view.KeepEmployeeView;
@@ -25,7 +24,7 @@ public class KeepEmployeePresenter {
 
     }
 
-    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) {
+    public static KeepEmployeePresenter getInstance() {
         if (instance == null) {
             instance = new KeepEmployeePresenter();
         }

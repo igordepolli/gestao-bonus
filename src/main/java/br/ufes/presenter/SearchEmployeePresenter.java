@@ -40,9 +40,9 @@ public class SearchEmployeePresenter {
     }
 
     private void initListeners() {
-        view.getBtnClose().addActionListener((ActionEvent arg0) -> {
-            view.dispose();
-        });
+        view.getBtnClose().addActionListener((ActionEvent arg0) ->
+            view.dispose()
+        );
 
         view.getBtnSearch().addActionListener((ActionEvent arg0) -> {
             try {
@@ -55,7 +55,7 @@ public class SearchEmployeePresenter {
         view.getBtnViewEmployee().addActionListener((ActionEvent arg0) -> {
             try {
                 Employee emp = getEmployeeSelected();
-                KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance();
                 keepEmployeePresenter.setEmployee(emp);
                 keepEmployeePresenter.setState(new KeepEmployeePresenterViewState(keepEmployeePresenter, employeeCollection));
             } catch (Exception ex) {
@@ -65,7 +65,7 @@ public class SearchEmployeePresenter {
 
         view.getBtnNewEmployee().addActionListener((ActionEvent arg0) -> {
             try {
-                KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance();
                 keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -102,9 +102,7 @@ public class SearchEmployeePresenter {
     }
 
     private Employee getEmployeeSelected() {
-        Employee employee = employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
-
-        return employee;
+        return employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
     }
 
     private String getIdOfEmployeeSelected() {
@@ -118,11 +116,7 @@ public class SearchEmployeePresenter {
     }
 
     private void changeView() {
-        if (checkIfElementWasSelected()) {
-            view.getBtnViewEmployee().setEnabled(true);
-        } else {
-            view.getBtnViewEmployee().setEnabled(false);
-        }
+        view.getBtnViewEmployee().setEnabled(checkIfElementWasSelected());
     }
 
     private void defineTableBehavior(String textInNameTextField) {
@@ -144,15 +138,14 @@ public class SearchEmployeePresenter {
 
     private void loadEmployees(List<Employee> employees) {
         clearTable();
-        System.out.println(employees.size());
-        employees.forEach(employee -> {
+        employees.forEach(employee ->
             tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
                 employee.getOccupation(),
                 employee.getBaseSalary()
-            });
-        });
+            })
+        );
     }
 
     public SearchEmployeeView getView() {

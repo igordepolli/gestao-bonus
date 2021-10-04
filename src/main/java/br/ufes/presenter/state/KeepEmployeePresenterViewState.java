@@ -20,17 +20,17 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
     }
 
     private void initListeners() {
-        presenter.getView().getBtnClose().addActionListener((ActionEvent arg0) -> {
-            presenter.getView().dispose();
-        });
+        presenter.getView().getBtnClose().addActionListener((ActionEvent arg0) ->
+            presenter.getView().dispose()
+        );
 
-        presenter.getView().getBtnEdit().addActionListener((ActionEvent arg0) -> {
-            update();
-        });
+        presenter.getView().getBtnEdit().addActionListener((ActionEvent arg0) ->
+            update()
+        );
 
-        presenter.getView().getBtnDelete().addActionListener((ActionEvent arg0) -> {
-            delete();
-        });
+        presenter.getView().getBtnDelete().addActionListener((ActionEvent arg0) ->
+            delete()
+        );
     }
 
     @Override

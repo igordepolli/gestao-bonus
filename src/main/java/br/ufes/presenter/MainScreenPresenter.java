@@ -6,7 +6,6 @@ import br.ufes.view.MainScreenView;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MainScreenPresenter {
@@ -20,7 +19,6 @@ public class MainScreenPresenter {
 
     private MainScreenPresenter() {
         view = new MainScreenView();
-        view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
         employeeCollection = EmployeeCollection.getInstance();
 
@@ -39,7 +37,7 @@ public class MainScreenPresenter {
         try {
             view.getMniKeepEmployee().addActionListener((ActionEvent e) -> {
                 try {
-                    keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    keepEmployeePresenter = KeepEmployeePresenter.getInstance();
                     keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
                     view.add(keepEmployeePresenter.getView());
                 } catch (Exception ex) {
