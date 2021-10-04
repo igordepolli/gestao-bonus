@@ -138,4 +138,19 @@ class EmployeeTest {
         assertEquals(salarioBase, employee.getBaseSalary());
     }
 
+    @Test
+    void CT009() throws AppExceptions {
+        // Arrange
+        Exception exception = assertThrows(Exception.class, () -> {
+           Employee emp = new Employee("Fulano", 1000, "Gerente");
+            emp.setBaseSalary(997.99);
+        });
+        
+        
+        String expectMessage = "\n#3 O salário base deve ser >= R$ 998,00";
+
+        // Assert
+        assertEquals(expectMessage, exception.getMessage());
+    }
+
 }

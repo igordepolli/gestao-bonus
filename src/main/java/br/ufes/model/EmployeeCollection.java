@@ -53,8 +53,8 @@ public class EmployeeCollection {
             }
         }
         if (employeeToDelete != null) {
-          employees.remove(employeeToDelete);
-          employees.add(employee);
+          removeEmployee(employeeToDelete);
+          addEmployee(employee);
         }
     }
 
@@ -70,4 +70,7 @@ public class EmployeeCollection {
         return employees;
     }
 
+    public void clearList (){
+        employees.removeAll(employees);
+    }
 }
