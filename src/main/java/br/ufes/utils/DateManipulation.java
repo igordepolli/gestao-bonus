@@ -8,11 +8,13 @@ import java.util.Date;
 
 public class DateManipulation {
 
+    private DateManipulation() {
+      throw new IllegalStateException("Utility class");
+    }
+
     public static LocalDate stringToLocalDate(String dateString) throws ParseException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate ld = LocalDate.parse(dateString, dtf);
-
-        return ld;
+        return LocalDate.parse(dateString, dtf);
     }
 
     public static String localDateToString(LocalDate date) {

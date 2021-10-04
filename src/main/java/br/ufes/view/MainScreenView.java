@@ -10,6 +10,7 @@ public class MainScreenView extends javax.swing.JFrame {
      */
     public MainScreenView() {
         initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
