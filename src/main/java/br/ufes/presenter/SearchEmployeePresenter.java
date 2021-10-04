@@ -124,7 +124,7 @@ public class SearchEmployeePresenter {
 
     private void loadEmployees(List<Employee> employees) {
         empTable.clearTable(this.tableEmployees);
-        employees.forEach(employee -> {
+        employees.forEach(employee ->
             tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
