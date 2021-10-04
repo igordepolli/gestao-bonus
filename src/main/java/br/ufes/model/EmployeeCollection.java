@@ -71,6 +71,6 @@ public class EmployeeCollection {
     }
 
     public void clearList (){
-        employees.removeAll(employees);
+        employees.clear();
     }
 }
