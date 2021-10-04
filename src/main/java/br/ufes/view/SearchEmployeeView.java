@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-public class SearchEmployeeView extends javax.swing.JInternalFrame {
+public class SearchEmployeeView extends javax.swing.JInternalFrame implements IEmployeeTable {
 
     /**
      * Creates new form SearchEmployeeView
@@ -140,6 +140,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
         return btnViewEmployee;
     }
 
+    @Override
     public JTable getTblEmployees() {
         return tblEmployees;
     }

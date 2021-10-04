@@ -4,12 +4,12 @@ import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.presenter.state.KeepEmployeePresenterIncludeState;
 import br.ufes.presenter.state.KeepEmployeePresenterViewState;
+import br.ufes.utils.EmployeeTableConstructor;
 import br.ufes.view.SearchEmployeeView;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 public class SearchEmployeePresenter {
@@ -17,15 +17,20 @@ public class SearchEmployeePresenter {
     private static SearchEmployeePresenter instance = null;
     private final SearchEmployeeView view;
     private EmployeeCollection employeeCollection;
-    private DefaultTableModel tableEmployees;
+    private final DefaultTableModel tableEmployees;    
+    private final EmployeeTableConstructor empTable;
+
 
     private SearchEmployeePresenter(EmployeeCollection employeeCollection) {
         this.employeeCollection = employeeCollection;
 
         view = new SearchEmployeeView();
         view.setLocation(20, 350);
-
-        constructTableModel();
+        
+        empTable = new EmployeeTableConstructor(new String[]{"ID", "Nome", "Função", "Salário base (R$)"});
+        tableEmployees = empTable.getTable();
+        empTable.constructTable(view);
+        
         loadEmployees(employeeCollection.getEmployees());
         initListeners();
     }
@@ -82,25 +87,6 @@ public class SearchEmployeePresenter {
         });
     }
 
-    private void constructTableModel() {
-        tableEmployees = new DefaultTableModel(
-                new Object[][][]{},
-                new String[]{"ID", "Nome", "Função", "Salário base (R$)"}
-        );
-
-        view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableEmployees.setNumRows(0);
-        view.getTblEmployees().setModel(tableEmployees);
-    }
-
-    private void clearTable() {
-        if (tableEmployees.getRowCount() > 0) {
-            for (int i = tableEmployees.getRowCount() - 1; i > -1; i--) {
-                tableEmployees.removeRow(i);
-            }
-        }
-    }
-
     private Employee getEmployeeSelected() {
         Employee employee = employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
 
@@ -143,8 +129,8 @@ public class SearchEmployeePresenter {
     }
 
     private void loadEmployees(List<Employee> employees) {
-        clearTable();
-        System.out.println(employees.size());
+        empTable.clearTable(this.tableEmployees);
+        
         employees.forEach(employee -> {
             tableEmployees.addRow(new Object[]{
                 employee.getId(),

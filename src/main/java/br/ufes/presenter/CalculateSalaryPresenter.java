@@ -5,17 +5,18 @@ import br.ufes.model.Employee;
 import br.ufes.model.EmployeeCollection;
 import br.ufes.view.CalculateSalaryView;
 import br.ufes.exceptions.AppExceptions;
+import br.ufes.utils.EmployeeTableConstructor;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 public class CalculateSalaryPresenter {
 
     private static CalculateSalaryPresenter instance = null;
     private final CalculateSalaryView view;
-    private DefaultTableModel tableEmployees;
+    private final EmployeeTableConstructor empTable;
+    private final DefaultTableModel tableEmployees;
     private EmployeeCollection employeeCollection;
 
     private CalculateSalaryPresenter(EmployeeCollection employeeCollection) {
@@ -24,7 +25,10 @@ public class CalculateSalaryPresenter {
         view = new CalculateSalaryView();
         view.setLocation(800, 20);
 
-        constructTableModel();
+        empTable = new EmployeeTableConstructor(new String[]{"Funcionário", "Salário Base (R$)", "Bônus Recebido (R$)", "Salário (R$)"});
+        tableEmployees = empTable.getTable();
+        empTable.constructTable(view);
+        
         loadEmployees(employeeCollection.getEmployees());
         initListeners();
     }
@@ -70,7 +74,7 @@ public class CalculateSalaryPresenter {
     }
 
     private void defineTableBehavior(String textInNameTextField) {
-        clearTable();
+        empTable.clearTable(this.tableEmployees);
         List<Employee> searchEmployee = searchEmployee(textInNameTextField);
         loadEmployees(searchEmployee);
     }
@@ -80,7 +84,7 @@ public class CalculateSalaryPresenter {
     }
 
     private void loadEmployees(List<Employee> employees) {
-        clearTable();
+        empTable.clearTable(this.tableEmployees);
 
         employees.forEach(employee ->
             tableEmployees.addRow(new Object[]{
@@ -90,25 +94,6 @@ public class CalculateSalaryPresenter {
                 employee.getSalary()
             })
         );
-    }
-
-    private void constructTableModel() {
-        tableEmployees = new DefaultTableModel(
-                new Object[][][]{},
-                new String[]{"Funcionário", "Salário Base (R$)", "Bônus Recebido (R$)", "Salário (R$)"}
-        );
-
-        view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableEmployees.setNumRows(0);
-        view.getTblEmployees().setModel(tableEmployees);
-    }
-
-    private void clearTable() {
-        if (tableEmployees.getRowCount() > 0) {
-            for (int i = tableEmployees.getRowCount() - 1; i > -1; i--) {
-                tableEmployees.removeRow(i);
-            }
-        }
     }
 
     private void calculateAllBonus() {
