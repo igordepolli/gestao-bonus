@@ -75,8 +75,23 @@ class EmployeeCollectionTest {
         assertEquals(expectSalary, collection.searchEmployeeById("01").getBaseSalary());
     }
     
- @Test
+        @Test
     void CT005() throws AppExceptions {
+        // Arrange
+        Employee emp1 = new Employee("Vlad", 11000, "Gerente");
+        Employee emp2 = new Employee("Vlad", 10000, "Gerente");
+        emp1.setId("01");
+        emp2.setId("02");
+        
+        collection.addEmployee(emp1);
+        collection.updateEmployee(emp2);
+             
+        // Assert
+        assertEquals(emp1, collection.searchEmployeeById("01"));
+    }
+    
+ @Test
+    void CT006() throws AppExceptions {
         // Arrange
         collection.addEmployee(new Employee("cascall", 11000, "Gerente"));
         collection.clearList();
@@ -87,7 +102,7 @@ class EmployeeCollectionTest {
     
     
     @Test
-    void CT006() throws AppExceptions {
+    void CT007() throws AppExceptions {
         // Arrange
         collection.addEmployee(new Employee("cascall", 11000, "Gerente"));
         collection.addEmployee(new Employee("cascall", 11000, "Gerente"));      
